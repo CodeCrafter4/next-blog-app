@@ -1,26 +1,24 @@
-'use client'
-import { assets, blog_data } from '@/Assets/assets'
-import Footer from '@/Components/Footer'
-import axios from 'axios'
-import Image from 'next/image'
-import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+"use client";
+import { assets, blog_data } from "@/Assets/assets";
+import Footer from "@/app/Components/Footer";
+import axios from "axios";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
-const page = ({params}) => {
-    const [data,setData]=useState(null)
-    
-    const fechBlogData= async()=>{
-      const unwrappedParams = await params;
-      const respose = await axios.get("/api/blog", {
-        params: { id: unwrappedParams.id },
-      });
-      setData(respose.data)
-       
+const page = ({ params }) => {
+  const [data, setData] = useState(null);
 
-    }
-    useEffect(()=>{
-        fechBlogData();
-    },[])
+  const fechBlogData = async () => {
+    const unwrappedParams = await params;
+    const respose = await axios.get("/api/blog", {
+      params: { id: unwrappedParams.id },
+    });
+    setData(respose.data);
+  };
+  useEffect(() => {
+    fechBlogData();
+  }, []);
   return data ? (
     <>
       <div className="bg-gray-200 py-5 px-5 md:px-12 lg:px-28">
@@ -63,7 +61,10 @@ const page = ({params}) => {
           alt=""
         />
         <h1 className="my-8 text-[26px] font-semibold">Introduction:</h1>
-        <div className='blogcontenet-' dangerouslySetInnerHTML={{__html:data.description}}></div>
+        <div
+          className="blogcontenet-"
+          dangerouslySetInnerHTML={{ __html: data.description }}
+        ></div>
         <div className="my-24 ">
           <p className="text-black font font-semibold my-4">
             Share this article in social media
@@ -80,6 +81,6 @@ const page = ({params}) => {
   ) : (
     <></>
   );
-}
+};
 
-export default page
+export default page;

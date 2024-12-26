@@ -1,5 +1,5 @@
 "use client";
-import SubscriptiontableItem from "@/Components/AdminComponent/SubscriptiontableItem";
+import SubscriptiontableItem from "@/app/Components/AdminComponent/SubscriptiontableItem";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -9,27 +9,23 @@ const page = () => {
 
   const fechEmails = async () => {
     const response = await axios.get("/api/email");
-    setEmails(response.data.emails)
+    setEmails(response.data.emails);
   };
 
-  const deleteEmail=async (mongoId) => {
-    const response = await axios.delete("/api/email",{
-    params: { id: mongoId
-
-  }
+  const deleteEmail = async (mongoId) => {
+    const response = await axios.delete("/api/email", {
+      params: { id: mongoId },
     });
-    if(response.data.success){
-      
-      toast.success(response.data.msg)
-      fechEmails()
-    }else{
-      toast.error("Error")
-  
-  }
-}
-  useEffect(()=>{
-    fechEmails()
-  },[])
+    if (response.data.success) {
+      toast.success(response.data.msg);
+      fechEmails();
+    } else {
+      toast.error("Error");
+    }
+  };
+  useEffect(() => {
+    fechEmails();
+  }, []);
 
   return (
     <div className="flex-1 pt-5 px-5 sm:pt-12 sm:pl:16">
@@ -50,10 +46,16 @@ const page = () => {
             </tr>
           </thead>
           <tbody>
-            {emails.map((item,index)=>{
-              return <SubscriptiontableItem key ={index} deleteEmail={deleteEmail} mongoId={item._id} email={item.email} date={item.date}/>
-
-
+            {emails.map((item, index) => {
+              return (
+                <SubscriptiontableItem
+                  key={index}
+                  deleteEmail={deleteEmail}
+                  mongoId={item._id}
+                  email={item.email}
+                  date={item.date}
+                />
+              );
             })}
             <SubscriptiontableItem />
           </tbody>
